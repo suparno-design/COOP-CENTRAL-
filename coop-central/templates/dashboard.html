@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Dashboard</h2>
+<div class="sql">SELECT SUM(balance) FROM v_member_summary WHERE status='Active';</div>
+<div class="stats">
+  <div class="stat"><small>Total savings</small><b>{{ s.savings|inr }}</b></div>
+  <div class="stat"><small>Active members</small><b>{{ s.active }} of {{ s.total }}</b></div>
+  <div class="stat"><small>Loans outstanding</small><b>{{ s.outstanding|inr }}</b></div>
+  <div class="stat"><small>Overdue loans</small><b class="{{ 'Overdue' if s.overdue }}">{{ s.overdue }}</b></div>
+</div>
+<div class="panel">
+  <h3>Recent transactions</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Date</th><th>Member</th><th>Type</th><th class="n">Amount</th></tr></thead>
+    <tbody>
+    {% for t in recent %}
+      <tr><td>{{ t.txn_date }}</td><td>{{ t.name }}</td><td class="{{ t.txn_type }}">{{ t.txn_type }}</td><td class="n">{{ t.amount|inr }}</td></tr>
+    {% else %}<tr><td colspan="4">No transactions yet. Record one under Savings.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+</div>
+{% endblock %}

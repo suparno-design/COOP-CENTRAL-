@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Savings</h2>
+<div class="sql">INSERT INTO savings_txn (account_id, txn_type, amount) ...;  -- triggers update balance</div>
+<div class="panel">
+  <h3>Record a transaction</h3><br>
+  <form method="post">
+    <label>Member<select name="member_id">{% for m in members %}<option value="{{ m.member_id }}">{{ m.name }} (#{{ m.member_id }})</option>{% endfor %}</select></label>
+    <label>Type<select name="type"><option>Deposit</option><option>Withdrawal</option></select></label>
+    <label>Amount (₹)<input name="amount" type="number" min="1" step="0.01" required></label>
+    <button class="btn">Save transaction</button>
+  </form>
+</div>
+<div class="panel"><div class="scroll"><table>
+  <thead><tr><th>Txn</th><th>Date</th><th>Member</th><th>Type</th><th class="n">Amount</th></tr></thead>
+  <tbody>
+  {% for t in txns %}
+    <tr><td>{{ t.txn_id }}</td><td>{{ t.txn_date }}</td><td>{{ t.name }}</td><td class="{{ t.txn_type }}">{{ t.txn_type }}</td><td class="n">{{ t.amount|inr }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table></div></div>
+{% endblock %}

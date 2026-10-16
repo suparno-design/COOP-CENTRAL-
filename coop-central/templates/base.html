@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Co-op Central</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="app">
+  <nav>
+    <div class="logo">Co-op <span>Central</span></div>
+    <a href="{{ url_for('dashboard') }}" class="{{ 'on' if page=='dash' }}">Dashboard</a>
+    <a href="{{ url_for('members') }}" class="{{ 'on' if page=='mem' }}">Members</a>
+    <a href="{{ url_for('savings') }}" class="{{ 'on' if page=='sav' }}">Savings</a>
+    <a href="{{ url_for('loans') }}" class="{{ 'on' if page=='loan' }}">Loans</a>
+    <button class="theme" id="th" type="button">Switch theme</button>
+  </nav>
+  <main>
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+      {% for cat, m in msgs %}<p class="msg {{ cat }}" role="status">{{ m }}</p>{% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+</body>
+</html>
